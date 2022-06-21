@@ -26,14 +26,13 @@ public class UserController {
     }
 
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,Integer userId){
+    public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto,@PathVariable("userId") Integer userId){
         UserDto updatedUser = this.userService.UpdateUser(userDto,userId);
         return ResponseEntity.ok(updatedUser);
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<ApiResponse> deleteUser(Integer userId){
-        UserDto userToDelete = this.userService.getUserById(userId);
+    public ResponseEntity<ApiResponse> deleteUser(@PathVariable("userId") Integer userId){
         this.userService.deleteUser(userId);
         return new ResponseEntity<>(new ApiResponse("message",true),HttpStatus.OK);
     }
@@ -44,7 +43,7 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUser(Integer userId){
+    public ResponseEntity<UserDto> getUser(@PathVariable("userId") Integer userId){
         return ResponseEntity.ok(this.userService.getUserById(userId));
     }
 }
